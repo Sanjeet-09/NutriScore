@@ -48,7 +48,6 @@ public class ProfileActivity extends AppCompatActivity {
         NeoBrutalistUtils.applyTactileFeedback(btnEditProfile);
         NeoBrutalistUtils.applyTactileFeedback(flAvatarContainer);
 
-        // Register Image Picker Launcher
         imagePickerLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -56,13 +55,13 @@ public class ProfileActivity extends AppCompatActivity {
                         Uri selectedImageUri = result.getData().getData();
                         if (selectedImageUri != null) {
                             try {
-                                // Persist permission so URI remains readable after app restart
+
                                 getContentResolver().takePersistableUriPermission(
                                         selectedImageUri,
                                         Intent.FLAG_GRANT_READ_URI_PERMISSION
                                 );
                             } catch (Exception ignored) {
-                                // Fallback if system doesn't support persistable permission
+
                             }
                             SessionManager.getInstance(ProfileActivity.this)
                                     .saveProfileImageUri(selectedImageUri.toString());
@@ -73,10 +72,8 @@ public class ProfileActivity extends AppCompatActivity {
                 }
         );
 
-        // Click listener to change avatar photo
         flAvatarContainer.setOnClickListener(v -> openImagePicker());
 
-        // Click listener to edit profile details
         btnEditProfile.setOnClickListener(v -> showEditProfileDialog());
 
         loadUserData();
@@ -91,7 +88,6 @@ public class ProfileActivity extends AppCompatActivity {
             finish();
         });
 
-        // Setup bottom navigation bar for PROFILE tab
         BottomNavHelper.setupBottomNav(this, "PROFILE");
     }
 
@@ -121,7 +117,6 @@ public class ProfileActivity extends AppCompatActivity {
             tvAvatarInitials.setText("NS");
         }
 
-        // Load profile photo if saved
         String photoUriStr = sessionManager.getProfileImageUri();
         if (photoUriStr != null && !photoUriStr.isEmpty()) {
             loadProfilePhoto(photoUriStr);
@@ -138,7 +133,7 @@ public class ProfileActivity extends AppCompatActivity {
             ivProfilePhoto.setVisibility(View.VISIBLE);
             tvAvatarInitials.setVisibility(View.GONE);
         } catch (Exception e) {
-            // Fallback to initials if image cannot be read
+
             ivProfilePhoto.setVisibility(View.GONE);
             tvAvatarInitials.setVisibility(View.VISIBLE);
         }

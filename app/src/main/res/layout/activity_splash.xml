@@ -9,7 +9,6 @@
     android:fitsSystemWindows="true"
     tools:context=".SplashActivity">
 
-    <!-- Center Content Group (Minimal Neo-Brutalist: Hero + Typography) -->
     <LinearLayout
         android:id="@+id/llCenterContent"
         android:layout_width="0dp"
@@ -24,7 +23,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.46">
 
-        <!-- Minimal Neo-Brutalist Hero Card -->
         <FrameLayout
             android:id="@+id/heroCard"
             android:layout_width="146dp"
@@ -43,7 +41,6 @@
                 android:src="@drawable/ic_barcode_shield" />
         </FrameLayout>
 
-        <!-- Brand Name: Minimalist Neo-Brutalist Typography -->
         <TextView
             android:id="@+id/tvAppTitle"
             android:layout_width="wrap_content"
@@ -55,7 +52,6 @@
             android:textSize="30sp"
             android:textStyle="bold" />
 
-        <!-- Subtitle: High-Tracked Minimalist Tagline -->
         <TextView
             android:id="@+id/tvAppSubtitle"
             android:layout_width="wrap_content"
@@ -69,7 +65,6 @@
 
     </LinearLayout>
 
-    <!-- Bottom Status & Minimalist Neo Progress Bar Container -->
     <LinearLayout
         android:id="@+id/progressContainer"
         android:layout_width="0dp"
@@ -84,7 +79,6 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent">
 
-        <!-- Sleek Minimal Neo-Brutalist Progress Bar -->
         <ProgressBar
             android:id="@+id/splashProgressBar"
             style="?android:attr/progressBarStyleHorizontal"

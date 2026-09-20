@@ -6,26 +6,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-/**
- * NutriScoringEngine — FSSAI-inspired food ingredient scoring engine.
- *
- * Methodology:
- *  1. Parse the comma/period-separated ingredients string into individual tokens.
- *  2. Match each token against a curated dictionary of 60+ known Indian packaged-food
- *     ingredients and assign a 0–10 health score per FSSAI and Nutri-Score criteria.
- *  3. Compute a position-weighted average (first-listed ingredients weigh more,
- *     per FSSAI's descending-quantity labelling mandate).
- *  4. Apply FSSAI penalty rules (high sodium, trans fat, INS count).
- *  5. Map the final % to an A–E grade.
- */
 public class NutriScoringEngine {
 
-    // ── Ingredient Dictionary ─────────────────────────────────────────────────
-    // Key: lowercase keyword fragment that can appear in an ingredient name.
-    // Value: [score(0-10), category(0=HARMFUL,1=CAUTION,2=NEUTRAL,3=BENEFICIAL), reason]
     private static final Object[][] INGREDIENT_DICT = {
 
-        // ── BENEFICIAL (score 8–10) ───────────────────────────────────────────
         {"makhana",        10, 3, "Foxnut: Low calorie, high protein, FSSAI-approved whole food"},
         {"foxnut",         10, 3, "Whole foxnut — rich in plant protein and magnesium"},
         {"almonds",         9, 3, "Unsalted almonds — healthy monounsaturated fats, Vitamin E"},
@@ -60,7 +44,6 @@ public class NutriScoringEngine {
         {"calcium",         8, 3, "Mineral fortification — bone health"},
         {"iron fortified",  8, 3, "Iron fortification — addresses Indian deficiency gap"},
 
-        // ── NEUTRAL (score 5–6) ──────────────────────────────────────────────
         {"rice flour",      6, 2, "Refined starch — moderate glycemic index"},
         {"corn flour",      6, 2, "Refined starch — moderate glycemic index"},
         {"corn starch",     5, 2, "Thickener — neutral, used in small quantity"},
@@ -86,7 +69,6 @@ public class NutriScoringEngine {
         {"dextrose",        4, 1, "Simple sugar — raises blood glucose"},
         {"maltodextrin",    4, 1, "Highly processed starch — high GI, minimal nutrients"},
 
-        // ── CAUTION (score 2–4) ──────────────────────────────────────────────
         {"palm oil",        2, 1, "High saturated fat; FSSAI flags palm oil in snacks"},
         {"palmolein",       2, 1, "Fractionated palm oil — high saturated fat content"},
         {"palm olein",      2, 1, "Fractionated palm oil — high saturated fat content"},
@@ -102,7 +84,6 @@ public class NutriScoringEngine {
         {"msg",             3, 1, "Monosodium glutamate — FSSAI-permitted but overconsumption debated"},
         {"monosodium glutamate", 3, 1, "MSG — FSSAI-permitted; sensitivity reported in some individuals"},
 
-        // ── HARMFUL (score 0–2) ───────────────────────────────────────────────
         {"ins 621",         2, 0, "MSG — FSSAI-permitted but flagged by FSSAI for children's food"},
         {"ins 627",         1, 0, "Disodium Guanylate — synthetic flavor enhancer; not allowed in infant food"},
         {"ins 631",         1, 0, "Disodium Inosinate — synthetic flavor enhancer; potentiates MSG effect"},
@@ -124,18 +105,10 @@ public class NutriScoringEngine {
         {"bht",             1, 0, "Butylated hydroxytoluene — synthetic antioxidant; FSSAI regulated"},
     };
 
-    // ─────────────────────────────────────────────────────────────────────────
-    // PUBLIC API
-    // ─────────────────────────────────────────────────────────────────────────
-
-    /**
-     * Full pipeline: parse ingredients string → score each → return list.
-     */
     public static List<IngredientScore> parseAndScore(String ingredientsText) {
         List<IngredientScore> results = new ArrayList<>();
         if (ingredientsText == null || ingredientsText.trim().isEmpty()) return results;
 
-        // Split by comma, period, or semicolon
         String[] tokens = ingredientsText.split("[,;.]+");
 
         for (String token : tokens) {
@@ -149,10 +122,6 @@ public class NutriScoringEngine {
         return results;
     }
 
-    /**
-     * Computes the position-weighted health percentage (0–100).
-     * Ingredients listed first (highest quantity per FSSAI rule) carry more weight.
-     */
     public static int computeHealthPercent(List<IngredientScore> scores) {
         if (scores == null || scores.isEmpty()) return 50;
 
@@ -161,7 +130,7 @@ public class NutriScoringEngine {
         int n = scores.size();
 
         for (int i = 0; i < n; i++) {
-            // Weight decays linearly: first ingredient = n, last = 1
+
             double weight = (n - i);
             weightedSum += scores.get(i).getScore() * weight;
             totalWeight += weight;
@@ -171,33 +140,23 @@ public class NutriScoringEngine {
         return (int) Math.round((avg / 10.0) * 100);
     }
 
-    /**
-     * Maps health percent + FSSAI penalties to A–E grade string.
-     *
-     * @param healthPercent  0–100
-     * @param sodiumMg       Sodium per 100g in mg (-1 if unknown)
-     * @param hasTransFat    True if trans fat detected
-     * @param insCount       Number of INS synthetic additives found
-     */
     public static String computeGrade(int healthPercent, int sodiumMg,
                                       boolean hasTransFat, int insCount) {
         String grade = percentToGrade(healthPercent);
 
-        // ── FSSAI Penalty Rules ──────────────────────────────────────────────
-        // Trans fat detected → floor at E
         if (hasTransFat) {
             grade = "E";
             return grade;
         }
-        // Sodium > 800mg/100g → floor at E
+
         if (sodiumMg > 800) {
             grade = worstGrade(grade, "E");
         }
-        // Sodium > 600mg/100g → floor at D
+
         else if (sodiumMg > 600) {
             grade = worstGrade(grade, "D");
         }
-        // 3+ INS synthetic additives → drop one grade level
+
         if (insCount >= 3) {
             grade = dropOneGrade(grade);
         }
@@ -205,10 +164,6 @@ public class NutriScoringEngine {
         return grade;
     }
 
-    /**
-     * Builds a short human-readable verdict string.
-     * Example: "3 Harmful · 2 Caution · 1 Beneficial"
-     */
     public static String buildVerdict(List<IngredientScore> scores) {
         int harmful = 0, caution = 0, neutral = 0, beneficial = 0;
         for (IngredientScore s : scores) {
@@ -227,9 +182,6 @@ public class NutriScoringEngine {
         return sb.length() > 0 ? sb.toString() : "No detailed data";
     }
 
-    /**
-     * Counts how many INS synthetic additives appear in the scores list.
-     */
     public static int countInsAdditives(List<IngredientScore> scores) {
         int count = 0;
         for (IngredientScore s : scores) {
@@ -238,9 +190,6 @@ public class NutriScoringEngine {
         return count;
     }
 
-    /**
-     * Returns true if any trans-fat-linked ingredient was detected.
-     */
     public static boolean detectTransFat(List<IngredientScore> scores) {
         for (IngredientScore s : scores) {
             String n = s.getName().toLowerCase(Locale.ROOT);
@@ -252,22 +201,16 @@ public class NutriScoringEngine {
         return false;
     }
 
-    /**
-     * Returns an Android color int for a given grade letter.
-     */
     public static int gradeColor(String grade) {
         switch (grade.toUpperCase(Locale.ROOT)) {
-            case "A": return 0xFF4CAF50; // Green
-            case "B": return 0xFF8BC34A; // Light Green
-            case "C": return 0xFFFFC107; // Amber
-            case "D": return 0xFFFF5722; // Deep Orange
-            default:  return 0xFFF44336; // Red (E)
+            case "A": return 0xFF4CAF50;
+            case "B": return 0xFF8BC34A;
+            case "C": return 0xFFFFC107;
+            case "D": return 0xFFFF5722;
+            default:  return 0xFFF44336;
         }
     }
 
-    /**
-     * Returns a drawable resource ID for the grade badge background.
-     */
     public static int gradeBadgeDrawable(String grade) {
         switch (grade.toUpperCase(Locale.ROOT)) {
             case "A": return R.drawable.bg_nutri_tile_a;
@@ -278,11 +221,6 @@ public class NutriScoringEngine {
         }
     }
 
-    // ─────────────────────────────────────────────────────────────────────────
-    // PRIVATE HELPERS
-    // ─────────────────────────────────────────────────────────────────────────
-
-    /** Matches a single ingredient token against the dictionary. */
     private static IngredientScore matchIngredient(String token) {
         String lower = token.toLowerCase(Locale.ROOT);
 
@@ -294,12 +232,11 @@ public class NutriScoringEngine {
 
             if (lower.contains(keyword)) {
                 IngredientScore.Category cat = ordinalToCategory(catOrdinal);
-                // Capitalize display name from the original token
+
                 return new IngredientScore(capitalize(token), score, cat, reason);
             }
         }
 
-        // Unknown ingredient → treat as Neutral with score 5
         return new IngredientScore(
                 capitalize(token), 5, IngredientScore.Category.NEUTRAL,
                 "Ingredient not in FSSAI/Nutri-Score database — assumed neutral"
@@ -323,12 +260,10 @@ public class NutriScoringEngine {
         return "E";
     }
 
-    /** Returns whichever grade letter is worse (lower in A–E). */
     private static String worstGrade(String g1, String g2) {
         return (gradeOrdinal(g1) > gradeOrdinal(g2)) ? g1 : g2;
     }
 
-    /** Drops one grade step: A→B, B→C, …, E→E */
     private static String dropOneGrade(String grade) {
         switch (grade) {
             case "A": return "B";

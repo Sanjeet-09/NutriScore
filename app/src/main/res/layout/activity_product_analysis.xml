@@ -9,7 +9,6 @@
     android:orientation="vertical"
     tools:context=".ProductAnalysisActivity">
 
-    <!-- Scrollable Content -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -25,7 +24,6 @@
             android:paddingEnd="20dp"
             android:paddingBottom="24dp">
 
-            <!-- Top Action Row -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -55,7 +53,6 @@
                     android:textSize="11sp"
                     android:textStyle="bold" />
 
-                <!-- FSSAI tag -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -68,7 +65,6 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <!-- Empty State Card (Shown when no product has been scanned) -->
             <FrameLayout
                 android:id="@+id/cardEmptyAnalysis"
                 android:layout_width="match_parent"
@@ -137,16 +133,12 @@
                 </LinearLayout>
             </FrameLayout>
 
-            <!-- Analysis Content Container (Cards 1-4) -->
             <LinearLayout
                 android:id="@+id/llAnalysisContentContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <!-- ═══════════════════════════════════════════════════════════════ -->
-                <!-- CARD 1: Product Header + Grade Badge                           -->
-                <!-- ═══════════════════════════════════════════════════════════════ -->
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -161,7 +153,6 @@
                         android:orientation="vertical"
                         android:padding="16dp">
 
-                        <!-- Brand + Name + Grade row -->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -203,7 +194,6 @@
                                     android:textSize="10sp" />
                             </LinearLayout>
 
-                            <!-- Grade Badge -->
                             <TextView
                                 android:id="@+id/tvAnalysisGradeBadge"
                                 android:layout_width="60dp"
@@ -216,7 +206,6 @@
                                 android:textStyle="bold" />
                         </LinearLayout>
 
-                    <!-- ── Overall Health Score Bar ─────────────────────────── -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -258,7 +247,6 @@
                         android:progress="34"
                         android:progressTint="@color/nutri_d" />
 
-                    <!-- Verdict line -->
                     <TextView
                         android:id="@+id/tvScoringVerdict"
                         android:layout_width="match_parent"
@@ -268,7 +256,6 @@
                         android:textColor="@color/nb_muted_gray"
                         android:textSize="11sp" />
 
-                    <!-- Risk Flags -->
                     <TextView
                         android:id="@+id/tvRiskFlags"
                         android:layout_width="match_parent"
@@ -283,9 +270,6 @@
                 </LinearLayout>
             </FrameLayout>
 
-            <!-- ═══════════════════════════════════════════════════════════════ -->
-            <!-- CARD 2: Ingredient-by-Ingredient Breakdown                     -->
-            <!-- ═══════════════════════════════════════════════════════════════ -->
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -300,7 +284,6 @@
                     android:orientation="vertical"
                     android:padding="16dp">
 
-                    <!-- Section header -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -341,7 +324,6 @@
                         android:layout_marginBottom="4dp"
                         android:background="@color/nb_border" />
 
-                    <!-- Dynamic ingredient rows injected here by Activity -->
                     <LinearLayout
                         android:id="@+id/containerIngredients"
                         android:layout_width="match_parent"
@@ -351,9 +333,6 @@
                 </LinearLayout>
             </FrameLayout>
 
-            <!-- ═══════════════════════════════════════════════════════════════ -->
-            <!-- CARD 3: Per-100g Nutrient Progress Meters                      -->
-            <!-- ═══════════════════════════════════════════════════════════════ -->
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -377,7 +356,6 @@
                         android:textSize="12sp"
                         android:textStyle="bold" />
 
-                    <!-- Sodium -->
                     <TextView
                         android:id="@+id/tvSodiumLabel"
                         android:layout_width="wrap_content"
@@ -398,7 +376,6 @@
                         android:progress="85"
                         android:progressTint="@color/nutri_e" />
 
-                    <!-- Saturated Fat -->
                     <TextView
                         android:id="@+id/tvFatLabel"
                         android:layout_width="wrap_content"
@@ -419,7 +396,6 @@
                         android:progress="75"
                         android:progressTint="@color/nutri_d" />
 
-                    <!-- Sugar -->
                     <TextView
                         android:id="@+id/tvSugarLabel"
                         android:layout_width="wrap_content"
@@ -440,7 +416,6 @@
                         android:progress="35"
                         android:progressTint="@color/nutri_c" />
 
-                    <!-- Protein & Fiber -->
                     <TextView
                         android:id="@+id/tvProteinLabel"
                         android:layout_width="wrap_content"
@@ -478,9 +453,6 @@
                 </LinearLayout>
             </FrameLayout>
 
-            <!-- ═══════════════════════════════════════════════════════════════ -->
-            <!-- CARD 4: Healthy Swap Recommendation                            -->
-            <!-- ═══════════════════════════════════════════════════════════════ -->
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -522,7 +494,6 @@
         </LinearLayout>
     </ScrollView>
 
-    <!-- Bottom Navigation Bar (4 Tabs) -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"

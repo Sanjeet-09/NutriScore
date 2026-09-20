@@ -4,26 +4,22 @@
     android:layout_height="match_parent"
     android:background="#000000">
 
-    <!-- CameraX Preview Surface -->
     <androidx.camera.view.PreviewView
         android:id="@+id/cameraPreview"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <!-- Dark overlay scrim (top) -->
     <View
         android:layout_width="match_parent"
         android:layout_height="140dp"
         android:background="#AA000000" />
 
-    <!-- Dark overlay scrim (bottom) -->
     <View
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_gravity="bottom"
         android:background="#AA000000" />
 
-    <!-- Scan Reticle Card -->
     <LinearLayout
         android:layout_width="280dp"
         android:layout_height="180dp"
@@ -31,14 +27,12 @@
         android:background="@drawable/bg_scanner_reticle"
         android:orientation="vertical" />
 
-    <!-- UI Overlay -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center_horizontal">
 
-        <!-- Top Bar -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -71,10 +65,8 @@
                 android:letterSpacing="0.1" />
         </LinearLayout>
 
-        <!-- Spacer to push reticle hint to center area -->
         <View android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="1" />
 
-        <!-- Hint text below reticle -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -86,7 +78,6 @@
 
         <View android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="1" />
 
-        <!-- Status chip at bottom -->
         <TextView
             android:id="@+id/tvScannerStatus"
             android:layout_width="wrap_content"

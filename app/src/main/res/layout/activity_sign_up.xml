@@ -20,7 +20,6 @@
         android:paddingEnd="24dp"
         android:paddingBottom="40dp">
 
-        <!-- Mini Brand Row: Logo + App Name -->
         <LinearLayout
             android:id="@+id/brandRow"
             android:layout_width="wrap_content"
@@ -45,7 +44,6 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <!-- Heading -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -56,7 +54,6 @@
             android:textSize="28sp"
             android:textStyle="bold" />
 
-        <!-- Subtitle -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -66,7 +63,6 @@
             android:textColor="@color/nb_muted_gray"
             android:textSize="13sp" />
 
-        <!-- Full Name Input -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -100,7 +96,6 @@
                 android:textSize="14sp" />
         </FrameLayout>
 
-        <!-- Email Input -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -134,7 +129,6 @@
                 android:textSize="14sp" />
         </FrameLayout>
 
-        <!-- Password Input -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -181,7 +175,6 @@
                 android:tint="@color/nb_muted_gray" />
         </FrameLayout>
 
-        <!-- Confirm Password Input -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -228,7 +221,6 @@
                 android:tint="@color/nb_muted_gray" />
         </FrameLayout>
 
-        <!-- Create Account Button -->
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="56dp"
@@ -251,7 +243,6 @@
                 android:textStyle="bold" />
         </FrameLayout>
 
-        <!-- Divider -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -283,7 +274,6 @@
                 android:background="@color/nb_border" />
         </LinearLayout>
 
-        <!-- Sign In Navigation -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

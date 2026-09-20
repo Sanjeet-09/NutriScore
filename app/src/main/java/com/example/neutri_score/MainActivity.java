@@ -36,8 +36,6 @@ public class MainActivity extends AppCompatActivity {
     private final ExecutorService bgExecutor = Executors.newSingleThreadExecutor();
     private final Handler mainHandler = new Handler(Looper.getMainLooper());
 
-    // ── ActivityResultLaunchers ───────────────────────────────────────────────
-
     private final ActivityResultLauncher<Intent> barcodeScanLauncher =
             registerForActivityResult(
                     new ActivityResultContracts.StartActivityForResult(),
@@ -141,18 +139,9 @@ public class MainActivity extends AppCompatActivity {
                 .show();
     }
 
-    // ─────────────────────────────────────────────────────────────────────────
-    // Barcode → API lookup
-    // ─────────────────────────────────────────────────────────────────────────
-
-    /**
-     * Called after camera returns a barcode/QR code value.
-     * Checks local presets first (instant), then hits Open Food Facts API.
-     */
     private void onBarcodeScanned(String barcodeValue) {
         tvScanStatusMsg.setText("DECODING...");
 
-        // Fast path: local preset barcodes
         String localKey = localKeyForBarcode(barcodeValue);
         if (localKey != null) {
             tvScanStatusMsg.setText("READY TO SCAN");
@@ -162,16 +151,11 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        // Slow path: fetch from Open Food Facts API
         fetchProductFromApi(barcodeValue);
     }
 
-    /**
-     * Runs an async API fetch with a loading dialog.
-     * Shows "Not Found" if the barcode isn't in Open Food Facts.
-     */
     private void fetchProductFromApi(String barcode) {
-        // Show loading dialog with multi-API indicator
+
         AlertDialog loadingDialog = new AlertDialog.Builder(this)
                 .setView(getLayoutInflater().inflate(android.R.layout.simple_list_item_1, null))
                 .setMessage("Searching Open Food Facts & UPC databases…\nBarcode: " + barcode)
@@ -190,11 +174,11 @@ public class MainActivity extends AppCompatActivity {
                 tvScanStatusMsg.setText("READY TO SCAN");
 
                 if (product != null) {
-                    // Found — log and open analysis
+
                     ProductRepository.getInstance().addScanLog(product);
                     launchAnalysis(product);
                 } else {
-                    // Not found in any API — prompt for ingredient input
+
                     showProductNotFoundDialog(barcode);
                 }
             });
@@ -246,7 +230,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    /** Maps a small set of known Indian product barcodes to local preset keys. */
     private String localKeyForBarcode(String barcode) {
         if (barcode == null) return null;
         String clean = barcode.trim();
@@ -262,15 +245,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // ─────────────────────────────────────────────────────────────────────────
-    // Image picker (Upload Label)
-    // ─────────────────────────────────────────────────────────────────────────
-
-    /**
-     * Image picked from gallery.
-     * AWS Rekognition OCR will extract ingredients from the image in a future sprint.
-     * For now, prompts user to paste ingredients manually.
-     */
     private void onImagePicked(Uri imageUri) {
         new AlertDialog.Builder(this)
                 .setTitle("Label Image Received")
@@ -281,10 +255,6 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton("Got it", null)
                 .show();
     }
-
-    // ─────────────────────────────────────────────────────────────────────────
-    // Ingredient Decoder
-    // ─────────────────────────────────────────────────────────────────────────
 
     private void setupIngredientDecoder() {
         btnAnalyzeIngredients.setOnClickListener(v -> {

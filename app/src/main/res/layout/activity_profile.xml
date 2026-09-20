@@ -9,7 +9,6 @@
     android:orientation="vertical"
     tools:context=".ProfileActivity">
 
-    <!-- Scrollable Content -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -34,7 +33,6 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <!-- User Info Card -->
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -50,7 +48,6 @@
                     android:orientation="horizontal"
                     android:padding="16dp">
 
-                    <!-- Interactive Avatar Frame (Click to upload photo) -->
                     <FrameLayout
                         android:id="@+id/flAvatarContainer"
                         android:layout_width="54dp"
@@ -58,7 +55,6 @@
                         android:clickable="true"
                         android:focusable="true">
 
-                        <!-- Profile Photo (Shown when set) -->
                         <ImageView
                             android:id="@+id/ivProfilePhoto"
                             android:layout_width="match_parent"
@@ -67,7 +63,6 @@
                             android:scaleType="centerCrop"
                             android:visibility="gone" />
 
-                        <!-- Initials Fallback (Shown when no photo) -->
                         <TextView
                             android:id="@+id/tvAvatarInitials"
                             android:layout_width="match_parent"
@@ -79,7 +74,6 @@
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
-                        <!-- Camera Badge Overlay -->
                         <TextView
                             android:layout_width="18dp"
                             android:layout_height="18dp"
@@ -135,7 +129,6 @@
                             android:textSize="9sp"
                             android:textStyle="bold" />
 
-                        <!-- Edit Profile Button -->
                         <TextView
                             android:id="@+id/btnEditProfile"
                             android:layout_width="wrap_content"
@@ -157,7 +150,6 @@
                 </LinearLayout>
             </FrameLayout>
 
-            <!-- 3 Stat Counters -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -272,10 +264,6 @@
                 </FrameLayout>
             </LinearLayout>
 
-
-            <!-- ═══════════════════════════════════ -->
-            <!-- About / App Info Card               -->
-            <!-- ═══════════════════════════════════ -->
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -290,7 +278,6 @@
                     android:orientation="vertical"
                     android:padding="16dp">
 
-                    <!-- Header row -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -319,7 +306,6 @@
                             android:textStyle="bold" />
                     </LinearLayout>
 
-                    <!-- Mission -->
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -336,7 +322,6 @@
                         android:layout_marginBottom="12dp"
                         android:background="@color/light_gray" />
 
-                    <!-- FSSAI credit row -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -362,9 +347,6 @@
                             android:textStyle="bold" />
                     </LinearLayout>
 
-                    <!-- Database integration note: Open Food Facts / AWS integration will be added here -->
-
-                    <!-- Built in row -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -394,7 +376,6 @@
                 </LinearLayout>
             </FrameLayout>
 
-            <!-- Sign Out Button -->
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
@@ -421,7 +402,6 @@
         </LinearLayout>
     </ScrollView>
 
-    <!-- Bottom Navigation Bar (4 Tabs) -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"

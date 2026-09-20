@@ -45,7 +45,6 @@ public class BarcodeScannerActivity extends AppCompatActivity {
     private BarcodeScanner barcodeScanner;
     private volatile boolean barcodeDetected = false;
 
-    // Permission launcher
     private final ActivityResultLauncher<String> requestPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), granted -> {
                 if (granted) {
@@ -68,7 +67,6 @@ public class BarcodeScannerActivity extends AppCompatActivity {
 
         btnCancelScan.setOnClickListener(v -> finish());
 
-        // Set up ML Kit scanner for all barcode formats
         BarcodeScannerOptions options = new BarcodeScannerOptions.Builder()
                 .setBarcodeFormats(Barcode.FORMAT_ALL_FORMATS)
                 .build();
@@ -76,7 +74,6 @@ public class BarcodeScannerActivity extends AppCompatActivity {
 
         cameraExecutor = Executors.newSingleThreadExecutor();
 
-        // Check camera permission
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 == PackageManager.PERMISSION_GRANTED) {
             startCamera();
@@ -93,21 +90,17 @@ public class BarcodeScannerActivity extends AppCompatActivity {
             try {
                 ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
 
-                // Preview use case
                 Preview preview = new Preview.Builder().build();
                 preview.setSurfaceProvider(cameraPreview.getSurfaceProvider());
 
-                // Image analysis use case for ML Kit
                 ImageAnalysis imageAnalysis = new ImageAnalysis.Builder()
                         .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                         .build();
 
                 imageAnalysis.setAnalyzer(cameraExecutor, this::analyzeImage);
 
-                // Use back camera
                 CameraSelector cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA;
 
-                // Bind to lifecycle
                 cameraProvider.unbindAll();
                 cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageAnalysis);
 
@@ -157,12 +150,10 @@ public class BarcodeScannerActivity extends AppCompatActivity {
             Toast.makeText(this, "Barcode: " + barcodeValue, Toast.LENGTH_SHORT).show();
         });
 
-        // Return result to caller
         Intent resultIntent = new Intent();
         resultIntent.putExtra(EXTRA_BARCODE_VALUE, barcodeValue);
         setResult(RESULT_OK, resultIntent);
 
-        // Small delay so the user sees the "found" status, then close
         new android.os.Handler(android.os.Looper.getMainLooper()).postDelayed(this::finish, 900);
     }
 

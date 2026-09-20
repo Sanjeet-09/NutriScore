@@ -15,30 +15,11 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-/**
- * Multi-API Product Lookup Engine.
- *
- * Uses a multi-tier waterfall strategy across global and Indian food databases:
- * Tier 1: Open Food Facts Global API v2 (world.openfoodfacts.org)
- * Tier 2: Open Food Facts .net Mirror (world.openfoodfacts.net)
- * Tier 3: Open Food Facts India Regional API v2 (in.openfoodfacts.org)
- * Tier 4: Open Food Facts Legacy API v0 (world.openfoodfacts.org/api/v0)
- * Tier 5: UPCitemdb Trial API (api.upcitemdb.com - 500M+ barcodes)
- * Tier 6: Open Food Facts Search Endpoint (cgi/search.pl)
- *
- * Also provides fetchProductByQuery() for live name/brand search (e.g. Bingo Mad Angles, Amul).
- */
 public class OpenFoodFactsService {
 
     private static final String TAG = "MultiApiProductService";
     private static final OkHttpClient HTTP_CLIENT = new OkHttpClient();
 
-    /**
-     * Attempts to fetch product details across barcode variants and multi-API endpoints.
-     *
-     * @param rawBarcode  Scanned barcode string
-     * @return            Scored ProductModel, or null if not found in any database
-     */
     public static ProductModel fetchProduct(String rawBarcode) {
         if (rawBarcode == null || rawBarcode.trim().isEmpty()) {
             return null;
@@ -49,27 +30,21 @@ public class OpenFoodFactsService {
         for (String code : variants) {
             Log.d(TAG, "Trying barcode variant: " + code);
 
-            // Tier 1: Open Food Facts Global v2
             ProductModel p1 = fetchFromOFF("https://world.openfoodfacts.org/api/v2/product/" + code + ".json", code);
             if (p1 != null) return p1;
 
-            // Tier 2: Open Food Facts .net Mirror
             ProductModel p2 = fetchFromOFF("https://world.openfoodfacts.net/api/v2/product/" + code + ".json", code);
             if (p2 != null) return p2;
 
-            // Tier 3: Open Food Facts India Regional Endpoint
             ProductModel p3 = fetchFromOFF("https://in.openfoodfacts.org/api/v2/product/" + code + ".json", code);
             if (p3 != null) return p3;
 
-            // Tier 4: Open Food Facts Legacy v0
             ProductModel p4 = fetchFromOFF("https://world.openfoodfacts.org/api/v0/product/" + code + ".json", code);
             if (p4 != null) return p4;
 
-            // Tier 5: UPCitemdb API
             ProductModel p5 = fetchFromUpcItemDb(code);
             if (p5 != null) return p5;
 
-            // Tier 6: Open Food Facts Search API
             ProductModel p6 = fetchFromOFFSearch(code);
             if (p6 != null) return p6;
         }
@@ -78,12 +53,6 @@ public class OpenFoodFactsService {
         return null;
     }
 
-    /**
-     * Searches Open Food Facts live databases by product name or brand (e.g. "Bingo Mad Angles", "ITC Bingo", "Amul").
-     *
-     * @param query Product or brand name string
-     * @return Scored ProductModel if found, or null if no matching product entry
-     */
     public static ProductModel fetchProductByQuery(String query) {
         if (query == null || query.trim().isEmpty()) {
             return null;
@@ -94,11 +63,9 @@ public class OpenFoodFactsService {
 
         String encodedQuery = Uri.encode(cleanedQuery);
 
-        // Try global search endpoint
         ProductModel p1 = searchOFFByTerm("https://world.openfoodfacts.org/cgi/search.pl?search_terms=" + encodedQuery + "&search_simple=1&action=process&json=1");
         if (p1 != null) return p1;
 
-        // Try India search endpoint
         ProductModel p2 = searchOFFByTerm("https://in.openfoodfacts.org/cgi/search.pl?search_terms=" + encodedQuery + "&search_simple=1&action=process&json=1");
         if (p2 != null) return p2;
 
@@ -124,7 +91,6 @@ public class OpenFoodFactsService {
                 return null;
             }
 
-            // Find best matching product that has ingredients or product name
             for (int i = 0; i < products.length(); i++) {
                 JSONObject p = products.getJSONObject(i);
                 String code = p.optString("code", "query_item");
@@ -146,15 +112,11 @@ public class OpenFoodFactsService {
         return null;
     }
 
-    /**
-     * Generates barcode format variations (e.g. handling leading zeros for EAN-13 vs UPC-A vs GTIN-14).
-     */
     private static List<String> generateBarcodeVariants(String raw) {
         List<String> list = new ArrayList<>();
         String cleanCode = raw.trim();
         list.add(cleanCode);
 
-        // Variant without leading zeros
         if (cleanCode.startsWith("0")) {
             String stripped = cleanCode.replaceAll("^0+", "");
             if (!stripped.isEmpty() && !list.contains(stripped)) {
@@ -162,7 +124,6 @@ public class OpenFoodFactsService {
             }
         }
 
-        // 12-digit UPC padded to 13-digit EAN-13
         if (cleanCode.length() == 12) {
             String padded = "0" + cleanCode;
             if (!list.contains(padded)) {
@@ -172,10 +133,6 @@ public class OpenFoodFactsService {
 
         return list;
     }
-
-    // ─────────────────────────────────────────────────────────────────────────
-    // Open Food Facts Parsing
-    // ─────────────────────────────────────────────────────────────────────────
 
     private static ProductModel fetchFromOFF(String urlString, String barcode) {
         String url = urlString;
@@ -208,7 +165,6 @@ public class OpenFoodFactsService {
 
             JSONObject p = root.getJSONObject("product");
 
-            // ── Enhanced Product Name & Brand Extraction ──────────────────────
             String name = p.optString("product_name", "");
             if (name.trim().isEmpty()) name = p.optString("product_name_en", "");
             if (name.trim().isEmpty()) name = p.optString("product_name_in", "");
@@ -219,7 +175,6 @@ public class OpenFoodFactsService {
             if (name.trim().isEmpty()) name = p.optString("title", "");
             if (name.trim().isEmpty()) name = p.optString("product_name_local", "");
 
-            // Extract brand (filter out 1-char typos like "a" or "A")
             String brand = clean(p.optString("brands", "")).toUpperCase(Locale.ROOT);
             if (brand.length() <= 1) brand = clean(p.optString("brand_owner", "")).toUpperCase(Locale.ROOT);
             if (brand.length() <= 1) brand = clean(p.optString("brand_owner_imported", "")).toUpperCase(Locale.ROOT);
@@ -235,7 +190,6 @@ public class OpenFoodFactsService {
             String ingredients = clean(p.optString("ingredients_text", ""));
             if (ingredients.isEmpty()) ingredients = "No ingredients data available.";
 
-            // If product name is missing or generic fallback, check tag arrays
             if (name.trim().isEmpty() || name.startsWith("PACKAGED FOOD ITEM")) {
                 JSONArray pTags = p.optJSONArray("product_name_tags");
                 if (pTags != null && pTags.length() > 0) {
@@ -249,7 +203,6 @@ public class OpenFoodFactsService {
                 }
             }
 
-            // Universal multi-category ingredient & metadata inference engine
             if (name.trim().isEmpty() || name.startsWith("PACKAGED FOOD ITEM") || name.equals("PACKAGED FOOD")) {
                 name = inferUniversalProductName(brand, category, ingredients, barcode);
             } else {
@@ -305,10 +258,6 @@ public class OpenFoodFactsService {
             return null;
         }
     }
-
-    // ─────────────────────────────────────────────────────────────────────────
-    // UPCitemdb API Parsing
-    // ─────────────────────────────────────────────────────────────────────────
 
     private static ProductModel fetchFromUpcItemDb(String barcode) {
         String url = "https://api.upcitemdb.com/prod/trial/lookup?upc=" + barcode;
@@ -374,10 +323,6 @@ public class OpenFoodFactsService {
         }
     }
 
-    // ─────────────────────────────────────────────────────────────────────────
-    // OFF Search API Fallback
-    // ─────────────────────────────────────────────────────────────────────────
-
     private static ProductModel fetchFromOFFSearch(String barcode) {
         String url = "https://world.openfoodfacts.org/cgi/search.pl?search_terms=" + barcode + "&search_simple=1&action=process&json=1";
 
@@ -411,10 +356,6 @@ public class OpenFoodFactsService {
             return null;
         }
     }
-
-    // ─────────────────────────────────────────────────────────────────────────
-    // Helpers
-    // ─────────────────────────────────────────────────────────────────────────
 
     private static List<String> buildRiskFlags(List<IngredientScore> breakdown,
                                                 int sodiumMg, boolean transF, int insCount) {
@@ -495,15 +436,11 @@ public class OpenFoodFactsService {
         return s.replaceAll("\\s+", " ").trim();
     }
 
-    /**
-     * Universal Product Name inference engine across all food & beverage categories.
-     */
     private static String inferUniversalProductName(String brand, String category, String ingredients, String barcode) {
         String lowerIng = ingredients.toLowerCase(Locale.ROOT);
         String lowerCat = category.toLowerCase(Locale.ROOT);
         String lowerBrand = brand.toLowerCase(Locale.ROOT);
 
-        // 1. Carbonated Beverages & Juices
         if (lowerIng.contains("carbonated water") || lowerCat.contains("carbonated") || lowerCat.contains("soda")) {
             if (lowerIng.contains("lemon") || lowerIng.contains("lime") || lowerIng.contains("330") || lowerBrand.contains("sprite")) {
                 return "SPRITE / LEMON-LIME CARBONATED DRINK";
@@ -517,7 +454,6 @@ public class OpenFoodFactsService {
             return "PACKAGED FRUIT JUICE DRINK";
         }
 
-        // 2. Chips, Wafers & Savory Snacks
         if (lowerIng.contains("potato") && (lowerIng.contains("palmolein") || lowerIng.contains("oil") || lowerIng.contains("salt"))) {
             return "POTATO CHIPS SNACK";
         }
@@ -528,32 +464,26 @@ public class OpenFoodFactsService {
             return "ROASTED MAKHANA SNACK";
         }
 
-        // 3. Biscuits, Cookies & Wafers
         if (lowerIng.contains("biscuit") || lowerIng.contains("cookie") || lowerCat.contains("biscuit") || lowerIng.contains("wheat flour") && lowerIng.contains("sugar") && lowerIng.contains("shortening")) {
             return "PACKAGED BISCUITS & COOKIES";
         }
 
-        // 4. Chocolates & Confectionery
         if (lowerIng.contains("cocoa") || lowerIng.contains("chocolate") || lowerCat.contains("chocolate")) {
             return "CHOCOLATE CONFECTIONERY";
         }
 
-        // 5. Instant Noodles & Pasta
         if (lowerIng.contains("noodle") || lowerIng.contains("tastemaker") || lowerCat.contains("noodle") || lowerCat.contains("pasta")) {
             return "INSTANT NOODLES / PASTA";
         }
 
-        // 6. Dairy & Milk Products
         if (lowerIng.contains("milk") || lowerIng.contains("whey") || lowerCat.contains("dairy") || lowerCat.contains("cheese") || lowerCat.contains("butter")) {
             return "PACKAGED DAIRY PRODUCT";
         }
 
-        // 7. Cereals & Millets
         if (lowerIng.contains("oats") || lowerIng.contains("ragi") || lowerIng.contains("millet") || lowerCat.contains("cereal")) {
             return "PACKAGED BREAKFAST CEREAL";
         }
 
-        // 8. Brand & Category Combinations
         if (!brand.isEmpty() && !"PACKAGED FOOD".equals(brand)) {
             if (!category.isEmpty() && !"PACKAGED FOOD".equals(category)) {
                 return brand + " " + category;

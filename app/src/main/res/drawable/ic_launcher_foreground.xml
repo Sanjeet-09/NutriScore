@@ -5,8 +5,6 @@
     android:viewportWidth="108"
     android:viewportHeight="108">
 
-    <!-- Scanner Viewfinder Corner Brackets -->
-    <!-- Top-Left -->
     <path
         android:strokeColor="#111111"
         android:strokeWidth="2.5"
@@ -14,7 +12,6 @@
         android:strokeLineJoin="round"
         android:pathData="M26,34 L26,26 L34,26" />
 
-    <!-- Top-Right -->
     <path
         android:strokeColor="#111111"
         android:strokeWidth="2.5"
@@ -22,7 +19,6 @@
         android:strokeLineJoin="round"
         android:pathData="M74,26 L82,26 L82,34" />
 
-    <!-- Bottom-Left -->
     <path
         android:strokeColor="#111111"
         android:strokeWidth="2.5"
@@ -30,7 +26,6 @@
         android:strokeLineJoin="round"
         android:pathData="M26,74 L26,82 L34,82" />
 
-    <!-- Bottom-Right -->
     <path
         android:strokeColor="#111111"
         android:strokeWidth="2.5"
@@ -38,7 +33,6 @@
         android:strokeLineJoin="round"
         android:pathData="M74,82 L82,82 L82,74" />
 
-    <!-- Barcode Stripes -->
     <path
         android:fillColor="#111111"
         android:pathData="M33,36 L36,36 L36,72 L33,72 Z" />
@@ -58,30 +52,25 @@
         android:fillColor="#111111"
         android:pathData="M72,36 L75,36 L75,72 L72,72 Z" />
 
-    <!-- Red Laser Beam -->
     <path
         android:strokeColor="#FFFF2A6D"
         android:strokeWidth="2"
         android:strokeLineCap="round"
         android:pathData="M28,54 L80,54" />
 
-    <!-- Central Health Shield: Shadow -->
     <path
         android:fillColor="#111111"
         android:pathData="M56,39 C65,39 68,43 68,51 C68,66 56,74 56,74 C56,74 44,66 44,51 C44,43 47,39 56,39 Z" />
 
-    <!-- Central Health Shield: Body -->
     <path
         android:fillColor="#FF038141"
         android:pathData="M54,37 C63,37 66,41 66,49 C66,64 54,72 54,72 C54,72 42,64 42,49 C42,41 45,37 54,37 Z" />
 
-    <!-- Central Health Shield: Stroke -->
     <path
         android:strokeColor="#111111"
         android:strokeWidth="2"
         android:pathData="M54,37 C63,37 66,41 66,49 C66,64 54,72 54,72 C54,72 42,64 42,49 C42,41 45,37 54,37 Z" />
 
-    <!-- Leaf Emblem Inside Shield -->
     <path
         android:fillColor="#FFFFFF"
         android:pathData="M54,44 C51,44 49,48 51,52 C53,56 54,60 54,60 C54,60 55,56 57,52 C59,48 57,44 54,44 Z" />

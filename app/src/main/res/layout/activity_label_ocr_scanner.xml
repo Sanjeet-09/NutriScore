@@ -6,7 +6,6 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <!-- Top Navigation HUD -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="64dp"
@@ -61,7 +60,6 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <!-- Camera Viewfinder Box -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -78,13 +76,11 @@
             android:layout_marginBottom="4dp"
             android:background="@color/nb_black">
 
-            <!-- CameraX Preview -->
             <androidx.camera.view.PreviewView
                 android:id="@+id/ocrPreviewView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
-            <!-- Reticle Overlay -->
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="220dp"
@@ -127,7 +123,6 @@
         </FrameLayout>
     </FrameLayout>
 
-    <!-- Bottom Controls HUD -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

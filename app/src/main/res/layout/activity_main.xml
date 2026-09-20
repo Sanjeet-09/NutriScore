@@ -9,7 +9,6 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <!-- Scrollable Content -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -25,7 +24,6 @@
             android:paddingEnd="20dp"
             android:paddingBottom="24dp">
 
-            <!-- Top Header HUD -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -67,7 +65,6 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <!-- Scanner Viewport Card -->
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -82,7 +79,6 @@
                     android:orientation="vertical"
                     android:padding="16dp">
 
-                    <!-- Reticle Viewport -->
                     <FrameLayout
                         android:id="@+id/scanViewfinderFrame"
                         android:layout_width="match_parent"
@@ -115,7 +111,6 @@
                         </LinearLayout>
                     </FrameLayout>
 
-                    <!-- Scanner Controls -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -170,7 +165,6 @@
                 </LinearLayout>
             </FrameLayout>
 
-            <!-- Search by Product/Brand Name Card -->
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -249,7 +243,6 @@
                 </LinearLayout>
             </FrameLayout>
 
-            <!-- Decode Ingredients Section -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -260,7 +253,6 @@
                 android:textSize="13sp"
                 android:textStyle="bold" />
 
-            <!-- Product Name Input (Optional) -->
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
@@ -358,7 +350,6 @@
         </LinearLayout>
     </ScrollView>
 
-    <!-- Bottom Navigation Bar (4 Tabs) -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"

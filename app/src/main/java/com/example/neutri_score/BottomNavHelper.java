@@ -4,9 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 
-/**
- * Helper to link the 4-tab bottom navigation bar across all main activities.
- */
 public class BottomNavHelper {
 
     public static void setupBottomNav(Activity activity, String activeTab) {
@@ -17,13 +14,11 @@ public class BottomNavHelper {
 
         if (tabScanner == null) return;
 
-        // Apply Neo-Brutalist tactile feedback to all tabs
         NeoBrutalistUtils.applyTactileFeedback(tabScanner);
         NeoBrutalistUtils.applyTactileFeedback(tabAnalysis);
         NeoBrutalistUtils.applyTactileFeedback(tabLogs);
         NeoBrutalistUtils.applyTactileFeedback(tabUser);
 
-        // Click handlers
         tabScanner.setOnClickListener(v -> {
             if (!activeTab.equals("SCANNER")) {
                 Intent intent = new Intent(activity, MainActivity.class);

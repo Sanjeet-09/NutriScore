@@ -23,7 +23,6 @@
         android:textColor="@color/nb_muted_gray"
         android:textSize="12sp" />
 
-    <!-- Name Label & Input -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -47,7 +46,6 @@
         android:textColorHint="@color/nb_muted_gray"
         android:textSize="14sp" />
 
-    <!-- Email Label & Input -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -71,7 +69,6 @@
         android:textColorHint="@color/nb_muted_gray"
         android:textSize="14sp" />
 
-    <!-- Action Buttons -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

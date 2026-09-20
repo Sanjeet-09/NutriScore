@@ -32,10 +32,6 @@ import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-/**
- * Real-time CameraX + ML Kit Text Recognition (OCR) Scanner Activity.
- * Point camera at package label or ingredient list to extract title and ingredients live.
- */
 public class LabelOcrScannerActivity extends AppCompatActivity {
 
     private static final String TAG = "LabelOcrScanner";
@@ -190,7 +186,6 @@ public class LabelOcrScannerActivity extends AppCompatActivity {
             return;
         }
 
-        // Run ingredient engine on extracted label text
         ProductModel model = ProductRepository.getInstance().analyzeRawIngredients(accumulatedOcrText);
 
         Intent intent = new Intent(this, ProductAnalysisActivity.class);

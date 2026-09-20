@@ -30,25 +30,19 @@ public class SignInActivity extends AppCompatActivity {
         NeoBrutalistUtils.setupLightStatusBar(this);
         setContentView(R.layout.activity_sign_in);
 
-        // 1. Initialize Views
         initViews();
 
-        // 2. Setup Password Visibility Toggle
         setupPasswordToggle();
 
-        // 3. Setup Button Press Effect
         NeoBrutalistUtils.applyTactileFeedback(btnSignIn);
 
-        // 4. Handle Sign In Action
         btnSignIn.setOnClickListener(v -> handleSignIn());
 
-        // 5. Navigate to Sign Up Screen
         tvGoToSignUp.setOnClickListener(v -> {
             Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
             startActivity(intent);
         });
 
-        // 6. Handle Forgot Password Flow
         tvForgotPassword.setOnClickListener(v -> handleForgotPassword());
     }
 
@@ -76,15 +70,10 @@ public class SignInActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * Validates input fields and proceeds with sign in.
-     * (AWS Cognito / Amplify Auth SDK will hook into this method later)
-     */
     private void handleSignIn() {
         String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
 
-        // Validate Email
         if (TextUtils.isEmpty(email)) {
             etEmail.setError("Email address is required");
             etEmail.requestFocus();
@@ -97,7 +86,6 @@ public class SignInActivity extends AppCompatActivity {
             return;
         }
 
-        // Validate Password
         if (TextUtils.isEmpty(password)) {
             etPassword.setError("Password is required");
             etPassword.requestFocus();
@@ -110,14 +98,11 @@ public class SignInActivity extends AppCompatActivity {
             return;
         }
 
-        // --- AUTHENTICATION SUCCESS (LOCAL SESSION) ---
-        // TODO: Replace with AWS Cognito signIn() API call once AWS backend is ready
         String derivedName = email.contains("@") ? email.substring(0, email.indexOf('@')) : "User";
         SessionManager.getInstance(this).createLoginSession(derivedName, email);
 
         Toast.makeText(this, "Welcome back, " + derivedName + "!", Toast.LENGTH_SHORT).show();
 
-        // Route to MainActivity and clear backstack
         Intent intent = new Intent(SignInActivity.this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
@@ -131,7 +116,7 @@ public class SignInActivity extends AppCompatActivity {
             etEmail.requestFocus();
             Toast.makeText(this, "Please provide your email address first", Toast.LENGTH_SHORT).show();
         } else {
-            // TODO: Hook into AWS Cognito forgotPassword() API
+
             Toast.makeText(this, "Password reset instructions will be sent to " + email + " once AWS backend is active.", Toast.LENGTH_LONG).show();
         }
     }

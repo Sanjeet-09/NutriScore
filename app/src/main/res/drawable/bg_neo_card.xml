@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Minimalist Neo-Brutalist Hard Offset Shadow -->
+
     <item
         android:left="4dp"
         android:top="4dp">
@@ -10,7 +10,6 @@
         </shape>
     </item>
 
-    <!-- Top Card with Crisp 2dp Border -->
     <item
         android:bottom="4dp"
         android:right="4dp">

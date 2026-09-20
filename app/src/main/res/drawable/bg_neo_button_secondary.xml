@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Hard Offset Shadow -->
+
     <item
         android:left="4dp"
         android:top="4dp">
@@ -9,7 +9,7 @@
             <corners android:radius="12dp" />
         </shape>
     </item>
-    <!-- Button Face: Outlined style -->
+
     <item
         android:bottom="4dp"
         android:right="4dp">

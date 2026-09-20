@@ -3,18 +3,14 @@ package com.example.neutri_score;
 import java.io.Serializable;
 import java.util.List;
 
-/**
- * Model representing a scanned/analyzed food product.
- * Extended with FSSAI-inspired ingredient breakdown and health scoring.
- */
 public class ProductModel implements Serializable {
     private String id;
     private String name;
     private String brand;
     private String category;
-    private String grade;                          // "A", "B", "C", "D", "E"
+    private String grade;
     private int gradeColor;
-    private int sodiumVal;                         // 0-100 progress bar value
+    private int sodiumVal;
     private int fatVal;
     private int sugarVal;
     private int proteinVal;
@@ -27,11 +23,10 @@ public class ProductModel implements Serializable {
     private String swapName;
     private String swapDesc;
 
-    // ── NEW: Scoring fields ──────────────────────────────────────────────────
-    private List<IngredientScore> ingredientBreakdown; // Per-ingredient FSSAI scores
-    private int healthPercent;                         // 0–100 overall health %
-    private String scoringVerdict;                     // e.g. "3 Harmful · 2 Caution"
-    private int sodiumMgPer100g;                       // Raw mg value for FSSAI penalty
+    private List<IngredientScore> ingredientBreakdown;
+    private int healthPercent;
+    private String scoringVerdict;
+    private int sodiumMgPer100g;
 
     public ProductModel(String id, String name, String brand, String category, String grade,
                         int gradeColor, int sodiumVal, int fatVal, int sugarVal, int proteinVal,
@@ -57,7 +52,6 @@ public class ProductModel implements Serializable {
         this.swapDesc = swapDesc;
     }
 
-    // ── Scoring injection (called by ProductRepository after scoring) ─────────
     public void applyScoring(List<IngredientScore> breakdown, int healthPercent,
                              String grade, String verdict, int sodiumMgPer100g) {
         this.ingredientBreakdown = breakdown;
@@ -68,7 +62,6 @@ public class ProductModel implements Serializable {
         this.sodiumMgPer100g = sodiumMgPer100g;
     }
 
-    // ── Existing getters ─────────────────────────────────────────────────────
     public String getId()              { return id; }
     public String getName()            { return name; }
     public String getBrand()           { return brand; }
@@ -88,7 +81,6 @@ public class ProductModel implements Serializable {
     public String getSwapName()        { return swapName; }
     public String getSwapDesc()        { return swapDesc; }
 
-    // ── New scoring getters ──────────────────────────────────────────────────
     public List<IngredientScore> getIngredientBreakdown() { return ingredientBreakdown; }
     public int getHealthPercent()      { return healthPercent; }
     public String getScoringVerdict()  { return scoringVerdict; }

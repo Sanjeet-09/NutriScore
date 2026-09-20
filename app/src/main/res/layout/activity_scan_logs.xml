@@ -9,7 +9,6 @@
     android:orientation="vertical"
     tools:context=".ScanLogsActivity">
 
-    <!-- Scrollable Content Area -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -25,7 +24,6 @@
             android:paddingEnd="20dp"
             android:paddingBottom="24dp">
 
-            <!-- Top Header Row -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -41,7 +39,6 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-                <!-- Count Badge -->
                 <TextView
                     android:id="@+id/tvScanCountBadge"
                     android:layout_width="wrap_content"
@@ -79,7 +76,6 @@
                     android:visibility="gone" />
             </LinearLayout>
 
-            <!-- Dynamic Scan History Container -->
             <LinearLayout
                 android:id="@+id/llLogsContainer"
                 android:layout_width="match_parent"
@@ -87,7 +83,6 @@
                 android:layout_marginTop="20dp"
                 android:orientation="vertical">
 
-                <!-- Enhanced Neo-Brutalist Empty State Card -->
                 <FrameLayout
                     android:id="@+id/cardEmptyLogs"
                     android:layout_width="match_parent"
@@ -158,7 +153,6 @@
         </LinearLayout>
     </ScrollView>
 
-    <!-- Bottom Navigation Bar (4 Tabs) -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"

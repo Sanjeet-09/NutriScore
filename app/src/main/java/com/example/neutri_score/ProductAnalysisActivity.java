@@ -17,12 +17,10 @@ import java.util.List;
 
 public class ProductAnalysisActivity extends AppCompatActivity {
 
-    // ── Empty state & container ───────────────────────────────────────────────
     private FrameLayout cardEmptyAnalysis;
     private TextView btnScanAnalysisCTA;
     private LinearLayout llAnalysisContentContainer;
 
-    // ── Header card views ────────────────────────────────────────────────────
     private TextView tvAnalysisCategory;
     private TextView tvAnalysisBrand;
     private TextView tvAnalysisProductName;
@@ -32,10 +30,8 @@ public class ProductAnalysisActivity extends AppCompatActivity {
     private TextView tvScoringVerdict;
     private TextView tvRiskFlags;
 
-    // ── Ingredient breakdown container ───────────────────────────────────────
     private LinearLayout containerIngredients;
 
-    // ── Nutrient meters ──────────────────────────────────────────────────────
     private TextView tvSodiumLabel;
     private ProgressBar pbSodium;
     private TextView tvFatLabel;
@@ -46,7 +42,6 @@ public class ProductAnalysisActivity extends AppCompatActivity {
     private ProgressBar pbProtein;
     private TextView tvAdditivesList;
 
-    // ── Swap + actions ───────────────────────────────────────────────────────
     private TextView btnScanAnother;
     private TextView btnBackToScannerTop;
 
@@ -125,22 +120,19 @@ public class ProductAnalysisActivity extends AppCompatActivity {
         }
 
         if (product == null) {
-            // Display clean empty state when no product is selected
+
             if (cardEmptyAnalysis != null) cardEmptyAnalysis.setVisibility(View.VISIBLE);
             if (llAnalysisContentContainer != null) llAnalysisContentContainer.setVisibility(View.GONE);
             return;
         }
 
-        // Show analysis cards, hide empty state
         if (cardEmptyAnalysis != null) cardEmptyAnalysis.setVisibility(View.GONE);
         if (llAnalysisContentContainer != null) llAnalysisContentContainer.setVisibility(View.VISIBLE);
 
-        // ── Product Header ────────────────────────────────────────────────────
         tvAnalysisCategory.setText(product.getCategory());
         tvAnalysisBrand.setText(product.getBrand());
         tvAnalysisProductName.setText(product.getName());
 
-        // ── Grade Badge ───────────────────────────────────────────────────────
         String grade = product.getGrade();
         tvAnalysisGradeBadge.setText(grade);
         tvAnalysisGradeBadge.setTextColor(Color.WHITE);
@@ -149,18 +141,15 @@ public class ProductAnalysisActivity extends AppCompatActivity {
             tvAnalysisGradeBadge.setTextColor(Color.BLACK);
         }
 
-        // ── Health Score Bar ──────────────────────────────────────────────────
         int pct = product.getHealthPercent();
         tvHealthPercent.setText(pct + "%");
         pbHealthScore.setProgress(pct);
         pbHealthScore.setProgressTintList(
                 ColorStateList.valueOf(NutriScoringEngine.gradeColor(grade)));
 
-        // ── Verdict line ──────────────────────────────────────────────────────
         String verdict = product.getScoringVerdict();
         tvScoringVerdict.setText(verdict != null ? verdict : "No detailed data");
 
-        // ── Risk Flags ────────────────────────────────────────────────────────
         List<String> flags = product.getRiskFlags();
         if (flags != null && !flags.isEmpty()) {
             StringBuilder sb = new StringBuilder("⚠️ ");
@@ -173,7 +162,6 @@ public class ProductAnalysisActivity extends AppCompatActivity {
             tvRiskFlags.setText("✅ No critical risk flags detected");
         }
 
-        // ── Ingredient Breakdown Rows ─────────────────────────────────────────
         List<IngredientScore> breakdown = product.getIngredientBreakdown();
         containerIngredients.removeAllViews();
         if (breakdown != null && !breakdown.isEmpty()) {
@@ -182,7 +170,6 @@ public class ProductAnalysisActivity extends AppCompatActivity {
             }
         }
 
-        // ── Nutrient Meters ───────────────────────────────────────────────────
         tvSodiumLabel.setText("SODIUM: " + product.getSodiumText());
         pbSodium.setProgress(product.getSodiumVal());
 
@@ -198,18 +185,11 @@ public class ProductAnalysisActivity extends AppCompatActivity {
         tvAdditivesList.setText(product.getAdditives());
     }
 
-    /**
-     * Dynamically builds a single ingredient row View:
-     *
-     *   🔴  Palm Oil ........................... 2/10
-     *       High saturated fat; FSSAI flags...
-     */
     private View buildIngredientRow(IngredientScore ing) {
         int dp4  = dp(4);
         int dp6  = dp(6);
         int dp8  = dp(8);
 
-        // ── Root row ──────────────────────────────────────────────────────────
         LinearLayout row = new LinearLayout(this);
         row.setOrientation(LinearLayout.VERTICAL);
         LinearLayout.LayoutParams rowParams = new LinearLayout.LayoutParams(
@@ -218,7 +198,6 @@ public class ProductAnalysisActivity extends AppCompatActivity {
         rowParams.setMargins(0, dp4, 0, dp4);
         row.setLayoutParams(rowParams);
 
-        // ── Top: icon + name + score pill ─────────────────────────────────────
         LinearLayout topRow = new LinearLayout(this);
         topRow.setOrientation(LinearLayout.HORIZONTAL);
         topRow.setGravity(Gravity.CENTER_VERTICAL);
@@ -226,13 +205,11 @@ public class ProductAnalysisActivity extends AppCompatActivity {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
 
-        // Icon emoji
         TextView tvIcon = new TextView(this);
         tvIcon.setText(ing.getIcon());
         tvIcon.setTextSize(16);
         tvIcon.setPadding(0, 0, dp8, 0);
 
-        // Ingredient name
         TextView tvName = new TextView(this);
         tvName.setText(ing.getName());
         tvName.setTextColor(Color.parseColor("#1A1A1A"));
@@ -242,7 +219,6 @@ public class ProductAnalysisActivity extends AppCompatActivity {
                 0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f);
         tvName.setLayoutParams(nameParams);
 
-        // Score pill
         TextView tvScore = new TextView(this);
         tvScore.setText(ing.getScoreLabel());
         tvScore.setTextColor(Color.WHITE);
@@ -255,7 +231,6 @@ public class ProductAnalysisActivity extends AppCompatActivity {
         topRow.addView(tvName);
         topRow.addView(tvScore);
 
-        // ── Bottom: reason text ───────────────────────────────────────────────
         TextView tvReason = new TextView(this);
         tvReason.setText(ing.getReason());
         tvReason.setTextColor(Color.parseColor("#888888"));
@@ -266,7 +241,6 @@ public class ProductAnalysisActivity extends AppCompatActivity {
         reasonParams.setMargins(dp(32), dp4, 0, 0);
         tvReason.setLayoutParams(reasonParams);
 
-        // ── Divider ───────────────────────────────────────────────────────────
         View divider = new View(this);
         divider.setBackgroundColor(Color.parseColor("#EEEEEE"));
         LinearLayout.LayoutParams divParams = new LinearLayout.LayoutParams(

@@ -53,7 +53,6 @@ public class ScanLogsActivity extends AppCompatActivity {
 
         renderLogs();
 
-        // Setup bottom navigation bar for LOGS tab
         BottomNavHelper.setupBottomNav(this, "LOGS");
     }
 
@@ -99,7 +98,6 @@ public class ScanLogsActivity extends AppCompatActivity {
             lp.setMargins(0, 0, 0, (int) (10 * density));
             itemCard.setLayoutParams(lp);
 
-            // Left text column
             LinearLayout textCol = new LinearLayout(this);
             textCol.setOrientation(LinearLayout.VERTICAL);
             LinearLayout.LayoutParams textLp = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f);
@@ -119,7 +117,6 @@ public class ScanLogsActivity extends AppCompatActivity {
             textCol.addView(tvName);
             textCol.addView(tvSub);
 
-            // Right Grade badge
             TextView tvGrade = new TextView(this);
             int badgeSize = (int) (38 * density);
             LinearLayout.LayoutParams badgeLp = new LinearLayout.LayoutParams(badgeSize, badgeSize);
@@ -146,7 +143,6 @@ public class ScanLogsActivity extends AppCompatActivity {
             itemCard.addView(textCol);
             itemCard.addView(tvGrade);
 
-            // Click listener on item card to view analysis
             itemCard.setOnClickListener(v -> {
                 ProductModel productModel = item.getProductModel();
                 if (productModel == null) {

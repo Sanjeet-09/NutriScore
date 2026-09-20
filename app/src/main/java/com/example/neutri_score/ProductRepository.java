@@ -9,10 +9,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-/**
- * In-memory repository providing preset Indian packaged food data,
- * FSSAI-scored ingredient analysis, and scan history.
- */
 public class ProductRepository {
 
     private static ProductRepository instance;
@@ -31,12 +27,8 @@ public class ProductRepository {
         return instance;
     }
 
-    // ─────────────────────────────────────────────────────────────────────────
-    // PRESET PRODUCTS
-    // ─────────────────────────────────────────────────────────────────────────
-
     private void initPresets() {
-        // ── Lays Magic Masala ─────────────────────────────────────────────────
+
         ProductModel lays = new ProductModel(
                 "lays",
                 "LAYS INDIA'S MAGIC MASALA",
@@ -53,7 +45,6 @@ public class ProductRepository {
         applyEngineScoring(lays, 780);
         productsMap.put("lays", lays);
 
-        // ── Kurkure Masala Munch ──────────────────────────────────────────────
         ProductModel kurkure = new ProductModel(
                 "kurkure",
                 "KURKURE MASALA MUNCH",
@@ -70,7 +61,6 @@ public class ProductRepository {
         applyEngineScoring(kurkure, 890);
         productsMap.put("kurkure", kurkure);
 
-        // ── Maggi 2-Minute Noodles ────────────────────────────────────────────
         ProductModel maggi = new ProductModel(
                 "maggi",
                 "MAGGI 2-MINUTE NOODLES",
@@ -87,7 +77,6 @@ public class ProductRepository {
         applyEngineScoring(maggi, 920);
         productsMap.put("maggi", maggi);
 
-        // ── Sprite Lemon-Lime Drink ───────────────────────────────────────────
         ProductModel sprite = new ProductModel(
                 "sprite",
                 "SPRITE LEMON-LIME DRINK",
@@ -105,10 +94,6 @@ public class ProductRepository {
         productsMap.put("sprite", sprite);
     }
 
-    /**
-     * Runs the NutriScoringEngine on a product's additives/ingredients string
-     * and calls applyScoring() on the model with the calculated results.
-     */
     private void applyEngineScoring(ProductModel model, int sodiumMgPer100g) {
         List<IngredientScore> breakdown = NutriScoringEngine.parseAndScore(model.getAdditives());
         int healthPercent = NutriScoringEngine.computeHealthPercent(breakdown);
@@ -120,14 +105,8 @@ public class ProductRepository {
         model.applyScoring(breakdown, healthPercent, grade, verdict, sodiumMgPer100g);
     }
 
-    // ─────────────────────────────────────────────────────────────────────────
-    // HISTORY
-    // ─────────────────────────────────────────────────────────────────────────
-
     private void initHistory() {
-        // Scan history starts empty by default (0 items).
-        // Real scans (camera barcode scans, Open Food Facts API lookups, or manual ingredient inputs)
-        // and cloud database items will populate this dynamically.
+
     }
 
     public ProductModel getProduct(String key) {
@@ -145,33 +124,22 @@ public class ProductRepository {
         scanHistory.add(0, new ScanLogItem(model.getName(), model.getGrade(), time, flag, model));
     }
 
-    // ─────────────────────────────────────────────────────────────────────────
-    // RAW INGREDIENTS ANALYSIS (text decoder)
-    // ─────────────────────────────────────────────────────────────────────────
-
-    /**
-     * Analyzes raw ingredients text typed/OCR'd by the user.
-     * Delegates fully to NutriScoringEngine.
-     */
     public ProductModel analyzeRawIngredients(String input) {
         return analyzeRawIngredients(null, input);
     }
 
     public ProductModel analyzeRawIngredients(String customName, String input) {
-        // Isolate ingredients only from raw OCR/typed text
+
         String ingredientsOnly = cleanOcrTextToIngredientsOnly(input);
         if (ingredientsOnly.isEmpty()) ingredientsOnly = input;
 
-        // Estimate sodium from text for FSSAI penalty check
         int estimatedSodiumMg = extractEstimatedSodium(ingredientsOnly);
 
-        // Derive product name if not explicitly provided
         String productName = customName != null ? customName.trim() : "";
         if (productName.isEmpty()) {
             productName = inferProductNameFromText(input);
         }
 
-        // Build a minimal ProductModel shell
         ProductModel customModel = new ProductModel(
                 "custom_" + System.currentTimeMillis(),
                 productName.toUpperCase(Locale.ROOT),
@@ -192,10 +160,8 @@ public class ProductRepository {
                 "Clean popped foxnuts with zero palm oil or synthetic INS flavor enhancers."
         );
 
-        // Apply engine scoring
         applyEngineScoring(customModel, estimatedSodiumMg);
 
-        // Build risk flags from harmful/caution ingredients
         List<String> flags = new ArrayList<>();
         if (customModel.getIngredientBreakdown() != null) {
             for (IngredientScore s : customModel.getIngredientBreakdown()) {
@@ -207,8 +173,7 @@ public class ProductRepository {
                 }
             }
         }
-        // Inject flags by re-applying scoring (we need a fresh model with flags populated)
-        // Since riskFlags is immutable in the model, we re-create it
+
         ProductModel finalModel = new ProductModel(
                 customModel.getId(), customModel.getName(), customModel.getBrand(),
                 customModel.getCategory(), customModel.getGrade(), customModel.getGradeColor(),
@@ -229,7 +194,6 @@ public class ProductRepository {
         return finalModel;
     }
 
-    /** Roughly estimates sodium mg from text keywords. */
     private int extractEstimatedSodium(String lower) {
         lower = lower.toLowerCase(Locale.ROOT);
         if (lower.contains("salt") && lower.contains("sodium")) return 750;
@@ -237,7 +201,6 @@ public class ProductRepository {
         return 200;
     }
 
-    /** Infers product title if user pastes ingredients with product name or header. */
     private String inferProductNameFromText(String raw) {
         if (raw == null || raw.trim().isEmpty()) return "DECODED INGREDIENT ITEM";
         String lower = raw.toLowerCase(Locale.ROOT);
@@ -249,7 +212,6 @@ public class ProductRepository {
         if (lower.contains("amul")) return "AMUL DAIRY PRODUCT";
         if (lower.contains("haldiram")) return "HALDIRAM'S NAMKEEN";
 
-        // Check first line or colon separator
         String[] lines = raw.split("\n");
         String firstLine = lines[0].trim();
         if (firstLine.contains(":")) {
@@ -264,17 +226,12 @@ public class ProductRepository {
         return "DECODED INGREDIENT ITEM";
     }
 
-    /**
-     * Filters OCR text to isolate ONLY ingredient names and additives,
-     * stripping out non-food metadata like address, dates, prices, FSSAI numbers, etc.
-     */
     public String cleanOcrTextToIngredientsOnly(String raw) {
         if (raw == null || raw.trim().isEmpty()) return "";
 
         String upper = raw.toUpperCase(Locale.ROOT);
         String cleaned = raw;
 
-        // 1. If "INGREDIENTS:" or similar header exists, extract from header onwards
         int idx = upper.indexOf("INGREDIENTS:");
         if (idx == -1) idx = upper.indexOf("INGREDIENTS :");
         if (idx == -1) idx = upper.indexOf("INGREDIENTS");
@@ -283,11 +240,10 @@ public class ProductRepository {
 
         if (idx != -1) {
             cleaned = raw.substring(idx);
-            // Remove header label
+
             cleaned = cleaned.replaceAll("(?i)^(INGREDIENTS|CONTAINS|SAMAGRI)\\s*[:\\-]", "").trim();
         }
 
-        // 2. Stop at metadata footers (Mfg, Exp, Batch, Net Wt, FSSAI, Customer Care, Marketed By)
         String[] footers = {
             "NUTRITIONAL INFORMATION", "NUTRITION FACTS", "MFG", "EXP", "BATCH",
             "NET WT", "NET WEIGHT", "MRP", "FSSAI", "LIC NO", "MARKETED BY",
@@ -302,7 +258,6 @@ public class ProductRepository {
             }
         }
 
-        // 3. Remove non-ingredient noise lines (URLs, Phone numbers, Licenses)
         String[] lines = cleaned.split("\n");
         StringBuilder sb = new StringBuilder();
         for (String line : lines) {
@@ -310,7 +265,6 @@ public class ProductRepository {
             if (l.isEmpty()) continue;
             String lUpper = l.toUpperCase(Locale.ROOT);
 
-            // Skip line if it contains price, license, phone, url, address
             if (lUpper.contains("LIC NO") || lUpper.contains("FSSAI") || lUpper.contains("CUSTOMER CARE")
                     || lUpper.contains("RS.") || lUpper.contains("MRP") || lUpper.contains("WWW.")
                     || lUpper.contains("@") || lUpper.matches(".*\\d{10}.*")) {

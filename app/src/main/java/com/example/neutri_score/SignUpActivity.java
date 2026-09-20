@@ -33,19 +33,14 @@ public class SignUpActivity extends AppCompatActivity {
         NeoBrutalistUtils.setupLightStatusBar(this);
         setContentView(R.layout.activity_sign_up);
 
-        // 1. Initialize Views
         initViews();
 
-        // 2. Setup Password Visibility Toggles
         setupPasswordToggles();
 
-        // 3. Setup Button Press Effect
         NeoBrutalistUtils.applyTactileFeedback(btnSignUp);
 
-        // 4. Handle Sign Up Action
         btnSignUp.setOnClickListener(v -> handleSignUp());
 
-        // 5. Navigate back to Sign In
         tvGoToSignIn.setOnClickListener(v -> finish());
     }
 
@@ -61,7 +56,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void setupPasswordToggles() {
-        // Main password toggle
+
         ivPasswordToggle.setOnClickListener(v -> {
             if (isPasswordVisible) {
                 etPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
@@ -75,7 +70,6 @@ public class SignUpActivity extends AppCompatActivity {
             etPassword.setSelection(etPassword.getText().length());
         });
 
-        // Confirm password toggle
         ivConfirmPasswordToggle.setOnClickListener(v -> {
             if (isConfirmPasswordVisible) {
                 etConfirmPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
@@ -90,17 +84,12 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * Validates input fields and creates user profile.
-     * (AWS Cognito / DynamoDB registration will hook into this method later)
-     */
     private void handleSignUp() {
         String fullName = etFullName.getText().toString().trim();
         String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
         String confirmPassword = etConfirmPassword.getText().toString().trim();
 
-        // Validate Full Name
         if (TextUtils.isEmpty(fullName)) {
             etFullName.setError("Full name is required");
             etFullName.requestFocus();
@@ -113,7 +102,6 @@ public class SignUpActivity extends AppCompatActivity {
             return;
         }
 
-        // Validate Email
         if (TextUtils.isEmpty(email)) {
             etEmail.setError("Email address is required");
             etEmail.requestFocus();
@@ -126,7 +114,6 @@ public class SignUpActivity extends AppCompatActivity {
             return;
         }
 
-        // Validate Password
         if (TextUtils.isEmpty(password)) {
             etPassword.setError("Password is required");
             etPassword.requestFocus();
@@ -139,7 +126,6 @@ public class SignUpActivity extends AppCompatActivity {
             return;
         }
 
-        // Validate Confirm Password
         if (TextUtils.isEmpty(confirmPassword)) {
             etConfirmPassword.setError("Please confirm your password");
             etConfirmPassword.requestFocus();
@@ -152,13 +138,10 @@ public class SignUpActivity extends AppCompatActivity {
             return;
         }
 
-        // --- REGISTRATION SUCCESS (LOCAL SESSION) ---
-        // TODO: Replace with AWS Cognito signUp() API call once AWS backend is ready
         SessionManager.getInstance(this).createLoginSession(fullName, email);
 
         Toast.makeText(this, "Account created! Welcome, " + fullName, Toast.LENGTH_SHORT).show();
 
-        // Route to MainActivity and clear backstack
         Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);

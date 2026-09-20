@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Base / Neutral -->
+
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="nb_black">#FF111111</color>
@@ -10,7 +10,6 @@
     <color name="nb_shadow">#FF111111</color>
     <color name="nb_muted_gray">#FF78716C</color>
 
-    <!-- Neo-Brutalist Accents -->
     <color name="nb_yellow">#FFFFD600</color>
     <color name="nb_neon_lime">#FF00E676</color>
     <color name="nb_hot_pink">#FFFF2A6D</color>
@@ -20,14 +19,12 @@
     <color name="pale_yellow">#FFF4BD</color>
     <color name="light_gray">#E5E5E5</color>
 
-    <!-- Nutri-Score Official Spectrum -->
     <color name="nutri_a">#FF038141</color>
     <color name="nutri_b">#FF85BB2F</color>
     <color name="nutri_c">#FFFECB02</color>
     <color name="nutri_d">#FFEE8100</color>
     <color name="nutri_e">#FFE63E11</color>
 
-    <!-- Radar 2026 Brutalist Palette -->
     <color name="brutal_yellow">#FFFFDE00</color>
     <color name="brutal_pink">#FFFF2A85</color>
     <color name="brutal_lime">#FF9BFF00</color>
