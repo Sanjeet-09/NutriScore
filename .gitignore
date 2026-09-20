@@ -28,6 +28,7 @@ Thumbs.db
 
 # google-services.json (if Firebase/GMS is added later)
 google-services.json
+PROJECT_STATUS.md
 
 # AWS config (if Amplify is added later)
 amplifyconfiguration.json
