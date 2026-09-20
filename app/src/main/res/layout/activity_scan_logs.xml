@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/brutal_yellow"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context=".ScanLogsActivity">
+
+    <!-- Scrollable Content Area -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="20dp"
+            android:paddingTop="24dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="24dp">
+
+            <!-- Top Header Row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:letterSpacing="0.06"
+                    android:text="SCAN HISTORY"
+                    android:textColor="@color/nb_black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <!-- Count Badge -->
+                <TextView
+                    android:id="@+id/tvScanCountBadge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/bg_neo_input"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="3dp"
+                    android:text="0 SCANS"
+                    android:textColor="@color/nb_muted_gray"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/btnClearLogs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_neo_button_secondary"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:letterSpacing="0.08"
+                    android:paddingStart="14dp"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="14dp"
+                    android:paddingBottom="8dp"
+                    android:text="CLEAR"
+                    android:textColor="@color/nb_black"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <!-- Dynamic Scan History Container -->
+            <LinearLayout
+                android:id="@+id/llLogsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+                <!-- Enhanced Neo-Brutalist Empty State Card -->
+                <FrameLayout
+                    android:id="@+id/cardEmptyLogs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_neo_card">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="28dp">
+
+                        <TextView
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:background="@drawable/bg_nutri_tile_a"
+                            android:gravity="center"
+                            android:text="📷"
+                            android:textSize="24sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:letterSpacing="0.04"
+                            android:text="NO SCAN HISTORY YET"
+                            android:textColor="@color/nb_black"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:gravity="center"
+                            android:lineSpacingExtra="2dp"
+                            android:text="Scanned packaged food items will be recorded here.\nTap below to scan your first product barcode!"
+                            android:textColor="@color/nb_muted_gray"
+                            android:textSize="12sp" />
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:layout_marginTop="20dp"
+                            android:background="@drawable/bg_neo_button_primary">
+
+                            <TextView
+                                android:id="@+id/btnScanProductCTA"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:gravity="center"
+                                android:letterSpacing="0.08"
+                                android:text="SCAN A PRODUCT"
+                                android:textColor="@color/white"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+                        </FrameLayout>
+
+                    </LinearLayout>
+                </FrameLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Bottom Navigation Bar (4 Tabs) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@drawable/bg_neo_bottom_nav"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp">
+
+        <TextView
+            android:id="@+id/tabBtnScanner"
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_neo_tab_inactive"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:letterSpacing="0.06"
+            android:text="SCANNER"
+            android:textColor="@color/nb_black"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tabBtnAnalysis"
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_neo_tab_inactive"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:letterSpacing="0.06"
+            android:text="ANALYSIS"
+            android:textColor="@color/nb_black"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tabBtnLogs"
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_neo_tab_active"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:letterSpacing="0.06"
+            android:text="LOGS"
+            android:textColor="@color/white"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tabBtnUser"
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_neo_tab_inactive"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:letterSpacing="0.06"
+            android:text="PROFILE"
+            android:textColor="@color/nb_black"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</LinearLayout>

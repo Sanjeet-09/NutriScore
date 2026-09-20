@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/brutal_yellow"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <!-- Scrollable Content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="20dp"
+            android:paddingTop="24dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="24dp">
+
+            <!-- Top Header HUD -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/ic_barcode_shield" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:letterSpacing="0.06"
+                    android:text="@string/splash_app_title"
+                    android:textColor="@color/nb_black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/btnHeaderUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_neo_button_secondary"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:letterSpacing="0.08"
+                    android:paddingStart="14dp"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="14dp"
+                    android:paddingBottom="8dp"
+                    android:text="PROFILE"
+                    android:textColor="@color/nb_black"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Scanner Viewport Card -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_neo_card">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <!-- Reticle Viewport -->
+                    <FrameLayout
+                        android:id="@+id/scanViewfinderFrame"
+                        android:layout_width="match_parent"
+                        android:layout_height="170dp"
+                        android:background="@color/nb_black">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:contentDescription="Barcode viewfinder"
+                                android:src="@drawable/ic_barcode_shield" />
+
+                            <TextView
+                                android:id="@+id/tvScanStatusMsg"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:letterSpacing="0.06"
+                                android:text="ALIGN BARCODE TO SCAN"
+                                android:textColor="@color/white"
+                                android:textSize="11sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </FrameLayout>
+
+                    <!-- Scanner Controls -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:orientation="horizontal">
+
+                        <FrameLayout
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_neo_button_primary">
+
+                            <TextView
+                                android:id="@+id/btnSimulateScan"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginEnd="4dp"
+                                android:layout_marginBottom="4dp"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:gravity="center"
+                                android:letterSpacing="0.08"
+                                android:text="SCAN BARCODE"
+                                android:textColor="@color/white"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+                        </FrameLayout>
+
+                        <FrameLayout
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_neo_button_secondary">
+
+                            <TextView
+                                android:id="@+id/btnUploadLabel"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginEnd="4dp"
+                                android:layout_marginBottom="4dp"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:gravity="center"
+                                android:letterSpacing="0.08"
+                                android:text="UPLOAD LABEL"
+                                android:textColor="@color/nb_black"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+                        </FrameLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </FrameLayout>
+
+            <!-- Search by Product/Brand Name Card -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_neo_card">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:letterSpacing="0.08"
+                        android:text="SEARCH PRODUCT OR BRAND"
+                        android:textColor="@color/nb_black"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="Lookup any Indian FMCG product directly by name"
+                        android:textColor="@color/nb_muted_gray"
+                        android:textSize="11sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/etSearchProductName"
+                            android:layout_width="0dp"
+                            android:layout_height="48dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_neo_input"
+                            android:hint="e.g. Bingo Mad Angles, Amul..."
+                            android:inputType="textPersonName"
+                            android:paddingStart="12dp"
+                            android:paddingEnd="12dp"
+                            android:textColor="@color/nb_black"
+                            android:textColorHint="@color/nb_muted_gray"
+                            android:textSize="13sp" />
+
+                        <FrameLayout
+                            android:layout_width="90dp"
+                            android:layout_height="48dp"
+                            android:layout_marginStart="8dp"
+                            android:background="@drawable/bg_neo_button_primary">
+
+                            <TextView
+                                android:id="@+id/btnSearchProductByName"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginEnd="3dp"
+                                android:layout_marginBottom="3dp"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:gravity="center"
+                                android:letterSpacing="0.06"
+                                android:text="SEARCH"
+                                android:textColor="@color/white"
+                                android:textSize="11sp"
+                                android:textStyle="bold" />
+                        </FrameLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+            </FrameLayout>
+
+            <!-- Decode Ingredients Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:letterSpacing="0.08"
+                android:text="DECODE INGREDIENTS"
+                android:textColor="@color/nb_black"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <!-- Product Name Input (Optional) -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_neo_input">
+
+                <EditText
+                    android:id="@+id/etIngredientProductName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="3dp"
+                    android:layout_marginBottom="3dp"
+                    android:background="@android:color/transparent"
+                    android:hint="Product Name (e.g. Bingo Mad Angles, optional)"
+                    android:inputType="textCapWords"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp"
+                    android:textColor="@color/nb_black"
+                    android:textColorHint="@color/nb_muted_gray"
+                    android:textSize="13sp" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_neo_input">
+
+                <EditText
+                    android:id="@+id/etRawIngredients"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="3dp"
+                    android:layout_marginBottom="3dp"
+                    android:background="@android:color/transparent"
+                    android:gravity="top|start"
+                    android:hint="Paste ingredient label list here..."
+                    android:padding="14dp"
+                    android:textColor="@color/nb_black"
+                    android:textColorHint="@color/nb_muted_gray"
+                    android:textSize="13sp" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_neo_button_primary">
+
+                    <TextView
+                        android:id="@+id/btnAnalyzeIngredients"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:letterSpacing="0.08"
+                        android:text="ANALYZE"
+                        android:textColor="@color/white"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="84dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/bg_neo_button_secondary">
+
+                    <TextView
+                        android:id="@+id/btnClearIngredients"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:letterSpacing="0.08"
+                        android:text="CLEAR"
+                        android:textColor="@color/nb_black"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+                </FrameLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Bottom Navigation Bar (4 Tabs) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@drawable/bg_neo_bottom_nav"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp">
+
+        <TextView
+            android:id="@+id/tabBtnScanner"
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_neo_tab_active"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:letterSpacing="0.06"
+            android:text="SCANNER"
+            android:textColor="@color/white"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tabBtnAnalysis"
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_neo_tab_inactive"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:letterSpacing="0.06"
+            android:text="ANALYSIS"
+            android:textColor="@color/nb_black"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tabBtnLogs"
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_neo_tab_inactive"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:letterSpacing="0.06"
+            android:text="LOGS"
+            android:textColor="@color/nb_black"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tabBtnUser"
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_neo_tab_inactive"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:letterSpacing="0.06"
+            android:text="PROFILE"
+            android:textColor="@color/nb_black"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</LinearLayout>

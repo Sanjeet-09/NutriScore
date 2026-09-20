@@ -1,0 +1,34 @@
+*.iml
+.gradle
+/local.properties
+local.properties
+
+# IDE - entire .idea directory
+.idea/
+
+# macOS
+.DS_Store
+Thumbs.db
+
+# Build outputs
+/build
+/app/build
+/captures
+
+# Native builds
+.externalNativeBuild
+.cxx
+
+# Signing keys (never commit)
+*.jks
+*.keystore
+*.pem
+*.p12
+*.key
+
+# google-services.json (if Firebase/GMS is added later)
+google-services.json
+
+# AWS config (if Amplify is added later)
+amplifyconfiguration.json
+awsconfiguration.json

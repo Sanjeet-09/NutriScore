@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Hard Offset Shadow -->
+    <item
+        android:left="3dp"
+        android:top="3dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/nb_shadow" />
+            <corners android:radius="12dp" />
+        </shape>
+    </item>
+    <!-- Card Face -->
+    <item
+        android:bottom="3dp"
+        android:right="3dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/nb_card_white" />
+            <stroke
+                android:width="2dp"
+                android:color="@color/nb_border" />
+            <corners android:radius="12dp" />
+        </shape>
+    </item>
+</layer-list>

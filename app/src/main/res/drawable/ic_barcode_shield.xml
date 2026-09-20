@@ -1,0 +1,88 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="100dp"
+    android:height="100dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+
+    <!-- Minimalist Scanner Viewfinder Corner Brackets (2dp crisp stroke) -->
+    <!-- Top-Left -->
+    <path
+        android:strokeColor="@color/nb_black"
+        android:strokeWidth="2.5"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M14,24 L14,14 L24,14" />
+
+    <!-- Top-Right -->
+    <path
+        android:strokeColor="@color/nb_black"
+        android:strokeWidth="2.5"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M76,14 L86,14 L86,24" />
+
+    <!-- Bottom-Left -->
+    <path
+        android:strokeColor="@color/nb_black"
+        android:strokeWidth="2.5"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M14,76 L14,86 L24,86" />
+
+    <!-- Bottom-Right -->
+    <path
+        android:strokeColor="@color/nb_black"
+        android:strokeWidth="2.5"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M76,86 L86,86 L86,76" />
+
+    <!-- Minimal Barcode Lines -->
+    <path
+        android:fillColor="@color/nb_black"
+        android:pathData="M23,26 L26,26 L26,74 L23,74 Z" />
+    <path
+        android:fillColor="@color/nb_black"
+        android:pathData="M30,26 L32,26 L32,74 L30,74 Z" />
+    <path
+        android:fillColor="@color/nb_black"
+        android:pathData="M36,26 L40,26 L40,74 L36,74 Z" />
+    <path
+        android:fillColor="@color/nb_black"
+        android:pathData="M60,26 L64,26 L64,74 L60,74 Z" />
+    <path
+        android:fillColor="@color/nb_black"
+        android:pathData="M68,26 L70,26 L70,74 L68,74 Z" />
+    <path
+        android:fillColor="@color/nb_black"
+        android:pathData="M74,26 L77,26 L77,74 L74,74 Z" />
+
+    <!-- Minimal Laser Scan Beam Line -->
+    <path
+        android:strokeColor="#FFFF2A6D"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:pathData="M16,50 L84,50" />
+
+    <!-- Central Health Shield - Minimalist Neo-Brutalist -->
+    <!-- Shield Solid Offset Shadow -->
+    <path
+        android:fillColor="@color/nb_shadow"
+        android:pathData="M52,31 C63,31 67,36 67,46 C67,64 52,74 52,74 C52,74 37,64 37,46 C37,36 41,31 52,31 Z" />
+
+    <!-- Shield Foreground Fill -->
+    <path
+        android:fillColor="@color/nutri_a"
+        android:pathData="M50,29 C61,29 65,34 65,44 C65,62 50,72 50,72 C50,72 35,62 35,44 C35,34 39,29 50,29 Z" />
+
+    <!-- Shield Border (2dp crisp black) -->
+    <path
+        android:strokeColor="@color/nb_black"
+        android:strokeWidth="2"
+        android:pathData="M50,29 C61,29 65,34 65,44 C65,62 50,72 50,72 C50,72 35,62 35,44 C35,34 39,29 50,29 Z" />
+
+    <!-- Organic Leaf Mark inside Shield -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M50,38 C46,38 44,43 46,48 C48,53 50,57 50,57 C50,57 52,53 54,48 C56,43 54,38 50,38 Z" />
+</vector>

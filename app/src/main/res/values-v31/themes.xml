@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Base.Theme.NeutriScore" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Android 12+ (API 31+) System Splash Screen configuration -->
+        <item name="android:windowSplashScreenBackground">@color/nb_bg_cream</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_barcode_shield</item>
+        <item name="android:windowSplashScreenIconBackgroundColor">@color/nb_bg_cream</item>
+        <!-- Window background for smooth transition -->
+        <item name="android:windowBackground">@color/nb_bg_cream</item>
+        <item name="android:statusBarColor">@color/nb_bg_cream</item>
+        <item name="android:navigationBarColor">@color/nb_bg_cream</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
+</resources>

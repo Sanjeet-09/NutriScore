@@ -1,0 +1,599 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/brutal_yellow"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context=".ProductAnalysisActivity">
+
+    <!-- Scrollable Content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="20dp"
+            android:paddingTop="24dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="24dp">
+
+            <!-- Top Action Row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/btnBackToScannerTop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:letterSpacing="0.06"
+                    android:text="← BACK"
+                    android:textColor="@color/nb_black"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:layout_weight="1"
+                    android:letterSpacing="0.08"
+                    android:text="NUTRITIONAL ANALYSIS"
+                    android:textColor="@color/nb_muted_gray"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <!-- FSSAI tag -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_neo_input"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="4dp"
+                    android:text="FSSAI"
+                    android:textColor="@color/nb_muted_gray"
+                    android:textSize="9sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Empty State Card (Shown when no product has been scanned) -->
+            <FrameLayout
+                android:id="@+id/cardEmptyAnalysis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_neo_card"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="28dp">
+
+                    <TextView
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:background="@drawable/bg_nutri_tile_a"
+                        android:gravity="center"
+                        android:text="🔬"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:letterSpacing="0.04"
+                        android:text="NO PRODUCT ANALYZED YET"
+                        android:textColor="@color/nb_black"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:gravity="center"
+                        android:lineSpacingExtra="2dp"
+                        android:text="Scan a product barcode or enter ingredients from the Scanner tab to see a complete FSSAI health breakdown and Nutri-Score analysis here."
+                        android:textColor="@color/nb_muted_gray"
+                        android:textSize="12sp" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/bg_neo_button_primary">
+
+                        <TextView
+                            android:id="@+id/btnScanAnalysisCTA"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:letterSpacing="0.08"
+                            android:text="SCAN A PRODUCT"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+                    </FrameLayout>
+
+                </LinearLayout>
+            </FrameLayout>
+
+            <!-- Analysis Content Container (Cards 1-4) -->
+            <LinearLayout
+                android:id="@+id/llAnalysisContentContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- ═══════════════════════════════════════════════════════════════ -->
+                <!-- CARD 1: Product Header + Grade Badge                           -->
+                <!-- ═══════════════════════════════════════════════════════════════ -->
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_neo_card">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <!-- Brand + Name + Grade row -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tvAnalysisBrand"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="BRAND NAME"
+                                    android:textColor="@color/nb_muted_gray"
+                                    android:textSize="10sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tvAnalysisProductName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:text="PRODUCT NAME"
+                                    android:textColor="@color/nb_black"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tvAnalysisCategory"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:text="PACKAGED FOOD"
+                                    android:textColor="@color/nb_muted_gray"
+                                    android:textSize="10sp" />
+                            </LinearLayout>
+
+                            <!-- Grade Badge -->
+                            <TextView
+                                android:id="@+id/tvAnalysisGradeBadge"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:background="@drawable/bg_nutri_tile_a"
+                                android:gravity="center"
+                                android:text="--"
+                                android:textColor="@color/white"
+                                android:textSize="28sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                    <!-- ── Overall Health Score Bar ─────────────────────────── -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:letterSpacing="0.08"
+                            android:text="HEALTH SCORE"
+                            android:textColor="@color/nb_black"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:id="@+id/tvHealthPercent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="34%"
+                            android:textColor="@color/nb_black"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <ProgressBar
+                        android:id="@+id/pbHealthScore"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:layout_marginTop="6dp"
+                        android:max="100"
+                        android:progress="34"
+                        android:progressTint="@color/nutri_d" />
+
+                    <!-- Verdict line -->
+                    <TextView
+                        android:id="@+id/tvScoringVerdict"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="3 Harmful · 2 Caution · 1 Neutral"
+                        android:textColor="@color/nb_muted_gray"
+                        android:textSize="11sp" />
+
+                    <!-- Risk Flags -->
+                    <TextView
+                        android:id="@+id/tvRiskFlags"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/bg_neo_input"
+                        android:padding="10dp"
+                        android:text="⚠️ Palm Oil • INS 627/631 • High Sodium"
+                        android:textColor="@color/nb_black"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <!-- CARD 2: Ingredient-by-Ingredient Breakdown                     -->
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_neo_card">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <!-- Section header -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:letterSpacing="0.08"
+                            android:text="INGREDIENT BREAKDOWN"
+                            android:textColor="@color/nb_black"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="FSSAI RATED"
+                            android:textColor="@color/nb_muted_gray"
+                            android:textSize="9sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Listed in descending quantity order (FSSAI rule)"
+                        android:textColor="@color/nb_muted_gray"
+                        android:textSize="10sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="4dp"
+                        android:background="@color/nb_border" />
+
+                    <!-- Dynamic ingredient rows injected here by Activity -->
+                    <LinearLayout
+                        android:id="@+id/containerIngredients"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" />
+
+                </LinearLayout>
+            </FrameLayout>
+
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <!-- CARD 3: Per-100g Nutrient Progress Meters                      -->
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_neo_card">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:letterSpacing="0.08"
+                        android:text="PER 100G NUTRITION"
+                        android:textColor="@color/nb_black"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <!-- Sodium -->
+                    <TextView
+                        android:id="@+id/tvSodiumLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="SODIUM: 780 mg (VERY HIGH)"
+                        android:textColor="@color/nb_black"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+
+                    <ProgressBar
+                        android:id="@+id/pbSodium"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp"
+                        android:layout_marginTop="4dp"
+                        android:max="100"
+                        android:progress="85"
+                        android:progressTint="@color/nutri_e" />
+
+                    <!-- Saturated Fat -->
+                    <TextView
+                        android:id="@+id/tvFatLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="SATURATED FAT: 11.5 g (HIGH)"
+                        android:textColor="@color/nb_black"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+
+                    <ProgressBar
+                        android:id="@+id/pbFat"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp"
+                        android:layout_marginTop="4dp"
+                        android:max="100"
+                        android:progress="75"
+                        android:progressTint="@color/nutri_d" />
+
+                    <!-- Sugar -->
+                    <TextView
+                        android:id="@+id/tvSugarLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="SUGARS: 3.2 g (MODERATE)"
+                        android:textColor="@color/nb_black"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+
+                    <ProgressBar
+                        android:id="@+id/pbSugar"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp"
+                        android:layout_marginTop="4dp"
+                        android:max="100"
+                        android:progress="35"
+                        android:progressTint="@color/nutri_c" />
+
+                    <!-- Protein & Fiber -->
+                    <TextView
+                        android:id="@+id/tvProteinLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="PROTEIN: 2.1 g (LOW)"
+                        android:textColor="@color/nb_black"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+
+                    <ProgressBar
+                        android:id="@+id/pbProtein"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp"
+                        android:layout_marginTop="4dp"
+                        android:max="100"
+                        android:progress="20"
+                        android:progressTint="@color/nutri_a" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="14dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@color/light_gray" />
+
+                    <TextView
+                        android:id="@+id/tvAdditivesList"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="INS 627, INS 631, Palmolein Oil"
+                        android:textColor="@color/nb_muted_gray"
+                        android:textSize="10sp" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <!-- CARD 4: Healthy Swap Recommendation                            -->
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_neo_card">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:background="@drawable/bg_neo_button_primary">
+
+                        <TextView
+                            android:id="@+id/btnScanAnother"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginEnd="4dp"
+                            android:layout_marginBottom="4dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:letterSpacing="0.08"
+                            android:text="SCAN ANOTHER PRODUCT"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+                    </FrameLayout>
+                </LinearLayout>
+            </FrameLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Bottom Navigation Bar (4 Tabs) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@drawable/bg_neo_bottom_nav"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp">
+
+        <TextView
+            android:id="@+id/tabBtnScanner"
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_neo_tab_inactive"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:letterSpacing="0.06"
+            android:text="SCANNER"
+            android:textColor="@color/nb_black"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tabBtnAnalysis"
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_neo_tab_active"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:letterSpacing="0.06"
+            android:text="ANALYSIS"
+            android:textColor="@color/white"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tabBtnLogs"
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_neo_tab_inactive"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:letterSpacing="0.06"
+            android:text="LOGS"
+            android:textColor="@color/nb_black"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tabBtnUser"
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_neo_tab_inactive"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:letterSpacing="0.06"
+            android:text="PROFILE"
+            android:textColor="@color/nb_black"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</LinearLayout>

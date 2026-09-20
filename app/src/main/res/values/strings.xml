@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">NeutriScore</string>
+    <string name="splash_badge_tag">★ FOOD TRANSPARENCY INITIATIVE</string>
+    <string name="splash_app_title">NEUTRI•SCORE</string>
+    <string name="splash_app_subtitle">DECODE WHAT YOU EAT</string>
+    <string name="splash_callout">Don\'t let bright packets fool you.\nScan barcodes or ingredients before you bite.</string>
+    <string name="splash_status">INITIALIZING SCANNER…</string>
+</resources>

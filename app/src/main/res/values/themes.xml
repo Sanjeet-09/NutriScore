@@ -1,0 +1,12 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme (Locked to Light Mode). -->
+    <style name="Base.Theme.NeutriScore" parent="Theme.Material3.Light.NoActionBar">
+        <item name="android:windowBackground">@color/nb_bg_cream</item>
+        <item name="android:statusBarColor">@color/nb_bg_cream</item>
+        <item name="android:navigationBarColor">@color/nb_bg_cream</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
+    </style>
+
+    <style name="Theme.NeutriScore" parent="Base.Theme.NeutriScore" />
+</resources>
