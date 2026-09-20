@@ -35,4 +35,5 @@
     <color name="brutal_dark">#FF0F0F13</color>
     <color name="brutal_gray">#FFE5E7EB</color>
     <color name="brutal_zinc_950">#FF09090B</color>
+    <color name="brutal_zinc_999">#B9000000</color>
 </resources>
